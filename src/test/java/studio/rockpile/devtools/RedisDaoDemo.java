@@ -27,7 +27,7 @@ public class RedisDaoDemo {
 
 			Boolean result = redisDao.checkBloomFilter(key, uuid);
 			System.out.println("result : " + result);
-			result = redisDao.checkBloomFilter(key, "38780ac854174852bade8e1444a0894d");
+			result = redisDao.checkBloomFilter(key, "4f5003dda5884f66985c69a3b3efea3f");
 			System.out.println("result2 : " + result);
 		} catch (Exception e) {
 			e.printStackTrace();

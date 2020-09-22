@@ -35,36 +35,37 @@ public class AviatorExpressDemo {
 	public void test() {
 		String expression = "1+2+3.6";
 		// Aviator的数值类型支持Long和Double
-		// rand()             返回一个介于0-1的随机数,double类型
-		// print([out],obj)   打印对象,如果指定out,向out打印,否则输出到控制台
-		// println([out],obj) 与print类似,但是在输出后换行
-		// long(v)            将值的类型转为long
-		// double(v)          将值的类型转为double
-		// str(v)             将值的类型转为string
-		// math.abs(d)        求d的绝对值
-		// math.sqrt(d)       求d的平方根
-		// math.pow(d1,d2)    求d1的d2次方
-		// math.log(d)        求d的自然对数
-		// math.log10(d)      求d以10为底的对数
-		// math.sin(d)        正弦函数
-		// math.cos(d)        余弦函数
-		// math.tan(d)        正切函数
+		// rand()： 返回一个介于0-1的随机数,double类型
+		// print([out],obj)： 打印对象,如果指定out,向out打印,否则输出到控制台
+		// println([out],obj)： 与print类似,但是在输出后换行
+		// long(v)： 将值的类型转为long
+		// double(v)： 将值的类型转为double
+		// str(v)： 将值的类型转为string
+		// math.abs(d)： 求d的绝对值
+		// math.sqrt(d)： 求d的平方根
+		// math.pow(d1,d2)： 求d1的d2次方
+		// math.log(d)： 求d的自然对数
+		// math.log10(d)： 求d以10为底的对数
+		// math.sin(d)： 正弦函数
+		// math.cos(d)： 余弦函数
+		// math.tan(d)： 正切函数
 		Double num = (Double) AviatorEvaluator.execute(expression);
 		System.out.println("num : " + num);
 
 		// Aviator的String是任何用单引号或者双引号括起来的字符序列
-		// date_to_string(date,format)                  将Date对象转化化特定格式的字符串
-		// string_to_date(source,format)                将特定格式的字符串转化为Date对象
-		// string.contains(s1,s2)                       判断s1是否包含s2,返回Boolean
-		// string.length(s)                             求字符串长度,返回Long
-		// string.startsWith(s1,s2)                     s1是否以s2开始,返回Boolean
-		// string.endsWith(s1,s2)                       s1是否以s2结尾,返回Boolean
-		// string.substring(s,begin[,end])              截取字符串s,从begin到end,如果忽略end的话,将从begin到结尾,与java.util.String.substring一样。
-		// string.indexOf(s1,s2)                        Java中的s1.indexOf(s2),求s2在s1中的起始索引位置,如果不存在为-1
-		// string.split(target,regex,[limit])           Java里的String.split方法一致函数
-		// string.join(seq,seperator)                   将集合seq里的元素以seperator为间隔连接起来形成字符串函数
-		// string.replace_first(s,regex,replacement)    Java里的String.replaceFirst方法
-		// string.replace_all(s,regex,replacement)      Java里的String.replaceAll方法 
+		// date_to_string(date,format)： 将Date对象转化化特定格式的字符串
+		// string_to_date(source,format)： 将特定格式的字符串转化为Date对象
+		// string.contains(s1,s2)： 判断s1是否包含s2,返回Boolean
+		// string.length(s)： 求字符串长度,返回Long
+		// string.startsWith(s1,s2)： s1是否以s2开始,返回Boolean
+		// string.endsWith(s1,s2)： s1是否以s2结尾,返回Boolean
+		// string.substring(s,begin[,end])：
+		// 截取字符串s,从begin到end,如果忽略end的话,将从begin到结尾,与java.util.String.substring一样。
+		// string.indexOf(s1,s2)： Java中的s1.indexOf(s2),求s2在s1中的起始索引位置,如果不存在为-1
+		// string.split(target,regex,[limit])： Java里的String.split方法一致函数
+		// string.join(seq,seperator)： 将集合seq里的元素以seperator为间隔连接起来形成字符串函数
+		// string.replace_first(s,regex,replacement)： Java里的String.replaceFirst方法
+		// string.replace_all(s,regex,replacement)： Java里的String.replaceAll方法
 		String name = "rockpile";
 		Map<String, Object> env = new HashMap<>();
 		env.put("name", name);
@@ -115,20 +116,22 @@ public class AviatorExpressDemo {
 
 			// aviator拥有强大的操作集合和数组的seq库
 			// 在aviator中, 数组以及java.util.Collection下的子类都称为seq
-			// map(seq,fun)             将函数fun作用到集合seq每个元素上, 返回新元素组成的集合
-			// filter(seq,predicate)    将谓词predicate作用在集合的每个元素上,返回谓词为true的元素组成的集合
-			// count(seq)               返回集合大小
-			// include(seq,element)     判断element是否在集合seq中,返回boolean值
-			// sort(seq)                排序集合,仅对数组和List有效,返回排序后的新集合
-			// reduce(seq,fun,init)     fun接收两个参数,第一个是集合元素, 第二个是累积的函数,本函数用于将fun作用在集合每个元素和初始值上面,返回最终的init值
-			// seq.eq(value)    返回一个谓词,用来判断传入的参数是否跟value相等,用于filter函数,如filter(seq,seq.eq(3))过滤返回等于3的元素组成的集合
-			// seq.neq(value)   与seq.eq类似,返回判断不等于的谓词
-			// seq.gt(value)    返回判断大于value的谓词
-			// seq.ge(value)    返回判断大于等于value的谓词
-			// seq.lt(value)    返回判断小于value的谓词
-			// seq.le(value)    返回判断小于等于value的谓词
-			// seq.nil()        返回判断是否为nil的谓词
-			// seq.exists()     返回判断不为nil的谓词
+			// map(seq,fun)： 将函数fun作用到集合seq每个元素上, 返回新元素组成的集合
+			// filter(seq,predicate)： 将谓词predicate作用在集合的每个元素上,返回谓词为true的元素组成的集合
+			// count(seq)： 返回集合大小
+			// include(seq,element)： 判断element是否在集合seq中,返回boolean值
+			// sort(seq)： 排序集合,仅对数组和List有效,返回排序后的新集合
+			// reduce(seq,fun,init)： fun接收两个参数,第一个是集合元素,
+			// 第二个是累积的函数,本函数用于将fun作用在集合每个元素和初始值上面,返回最终的init值
+			// seq.eq(value)：
+			// 返回一个谓词,用来判断传入的参数是否跟value相等,用于filter函数,如filter(seq,seq.eq(3))过滤返回等于3的元素组成的集合
+			// seq.neq(value)： 与seq.eq类似,返回判断不等于的谓词
+			// seq.gt(value)： 返回判断大于value的谓词
+			// seq.ge(value)： 返回判断大于等于value的谓词
+			// seq.lt(value)： 返回判断小于value的谓词
+			// seq.le(value)： 返回判断小于等于value的谓词
+			// seq.nil()： 返回判断是否为nil的谓词
+			// seq.exists()： 返回判断不为nil的谓词
 			List<Integer> nums = new ArrayList<>();
 			nums.add(10);
 			nums.add(30);
@@ -206,14 +209,19 @@ public class AviatorExpressDemo {
 	public void dateTest() {
 		// Aviator 并不支持日期类型，如果要比较日期，需要将日期写字符串的形式
 		// 并且要求是形如"yyyy-MM-dd HH:mm:ss:SS"的字符串,否则都将报错
-		// sysdate()          返回当前日期对象java.util.Date
-		// now()              返回System.currentTimeMillis
+		// sysdate()： 返回当前日期对象java.util.Date
+		// now()： 返回System.currentTimeMillis
 		Map<String, Object> env = new HashMap<String, Object>();
 		Date date = Calendar.getInstance().getTime();
 		String dateStr = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SS").format(date);
 		env.put("date", date);
 		env.put("dateStr", dateStr);
 
+		Date time = (Date) AviatorEvaluator.execute("sysdate()", env);
+		System.out.println("... time = " + time);
+		Long millis = (Long) AviatorEvaluator.execute("now()", env);
+		System.out.println("... millis = " + millis);
+		
 		Boolean result = (Boolean) AviatorEvaluator.execute("date==dateStr", env);
 		System.out.println(result); // true
 
