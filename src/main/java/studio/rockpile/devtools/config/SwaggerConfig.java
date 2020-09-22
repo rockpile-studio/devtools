@@ -22,9 +22,8 @@ public class SwaggerConfig {
 	// swagger-ui访问页面：http://127.0.0.1:5030/swagger-ui.html
 	@Bean
 	public Docket docket() {
-
-		ApiInfo info = new ApiInfoBuilder().title("Rockpile的API文档").description("API Documentation")
-				.termsOfServiceUrl("http://www.linewell.com/linewell/gw/index.jsp").version("1.0.0-SNAPSHOT").build();
+		ApiInfo info = new ApiInfoBuilder().title("Rockpile开发者工具的API文档").description("API Documentation")
+				.termsOfServiceUrl("http://www.linewell.com/linewell/gw/index.jsp").version("1.0").build();
 
 		// 配置Swagger信息
 		Docket docket = new Docket(DocumentationType.SWAGGER_2).apiInfo(info).enable(enable)
