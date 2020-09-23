@@ -11,7 +11,7 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 
 // 自定义Realm实现，将认证&授权的数据源转为数据库
-public class DemoCustomerRealm extends AuthorizingRealm {
+public class CustomerAuthzRealm extends AuthorizingRealm {
 	public final static String MD5_SALT = "8tdixRd65fWhGShP";
 	public final static Integer HASH_ITERATIONS = 1024;
 
@@ -29,7 +29,7 @@ public class DemoCustomerRealm extends AuthorizingRealm {
 			// 所以在业务层@service实现中，密码字段需要保存按MD5+Salt加密后密文
 			String username = "rockpile";
 			// 这里的密码是MD5+Salt加密后的字符串
-			// 通过ShiroMD5Util.encrypt()，可以计算"pwd123"对应的密文字符
+			// 通过SimpleEncrypter.shiroMd5Hash()，可以计算"pwd123"对应的密文字符
 			String password = "5fb0aa535df6f5c11380ccaee87bd84f";
 			SimpleAuthenticationInfo authInfo = new SimpleAuthenticationInfo(username, password,
 					ByteSource.Util.bytes(MD5_SALT), this.getName());

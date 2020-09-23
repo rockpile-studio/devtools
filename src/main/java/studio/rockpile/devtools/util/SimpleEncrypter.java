@@ -6,15 +6,15 @@ import java.util.Random;
 
 import org.apache.shiro.crypto.hash.Md5Hash;
 
-import studio.rockpile.devtools.shiro.realm.DemoCustomerRealm;
+import studio.rockpile.devtools.shiro.realm.CustomerAuthzRealm;
 
 public class SimpleEncrypter {
 	private static final int RADIX = 16;
 	private static final String SEED = "0933910847463829827159347601486730416058";
 	public static final int ENCRYPTED_PREFIX_LENGTH = 10;
 
-	public static String shiroSaltMd5(String message) {
-		Md5Hash md5 = new Md5Hash(message, DemoCustomerRealm.MD5_SALT, DemoCustomerRealm.HASH_ITERATIONS);
+	public static String shiroMd5Hash(String message) {
+		Md5Hash md5 = new Md5Hash(message, CustomerAuthzRealm.MD5_SALT, CustomerAuthzRealm.HASH_ITERATIONS);
 		return md5.toHex();
 	}
 

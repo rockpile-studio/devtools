@@ -12,7 +12,7 @@ public class Temporary {
 	@Test
 	public void shiroMd5Hash() {
 		String password = "pwd123";
-		String encrypt = SimpleEncrypter.shiroSaltMd5(password);
+		String encrypt = SimpleEncrypter.shiroMd5Hash(password);
 		System.out.println("encrypt : " + encrypt);
 	}
 	

@@ -9,7 +9,7 @@ import org.apache.shiro.mgt.DefaultSecurityManager;
 import org.apache.shiro.realm.text.IniRealm;
 import org.apache.shiro.subject.Subject;
 
-import studio.rockpile.devtools.shiro.realm.DemoCustomerRealm;
+import studio.rockpile.devtools.shiro.realm.CustomerAuthzRealm;
 
 // shiro的核心架构
 // Realm -> CachingRealm -> AuthenticatingRealm -> AuthorizingRealm -> SimpleAccountRealm
@@ -52,11 +52,11 @@ public class AuthenticatorDemo {
 	public void customerRealmAuth(String username, String password) throws Exception {
 		// 创建安全管理器对象SecurityManager
 		DefaultSecurityManager securityManager = new DefaultSecurityManager();
-		DemoCustomerRealm realm = new DemoCustomerRealm();
+		CustomerAuthzRealm realm = new CustomerAuthzRealm();
 		// 设置realm使用md5hash凭证匹配器
 		HashedCredentialsMatcher credentialMatcher = new HashedCredentialsMatcher();
 		credentialMatcher.setHashAlgorithmName("MD5");
-		credentialMatcher.setHashIterations(DemoCustomerRealm.HASH_ITERATIONS);
+		credentialMatcher.setHashIterations(CustomerAuthzRealm.HASH_ITERATIONS); // 指定hash散列次数
 		realm.setCredentialsMatcher(credentialMatcher);
 		securityManager.setRealm(realm);
 		// 将安全管理器注入SecurityUtils安全工具
