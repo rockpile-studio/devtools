@@ -1,5 +1,7 @@
 package studio.rockpile.devtools.shiro;
 
+import java.util.Arrays;
+
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
@@ -77,16 +79,54 @@ public class AuthenticatorDemo {
 			System.err.println("认证失败，用户密码错误");
 			e.printStackTrace();
 		}
+
+		// 对认证的用户进行授权，"授权"即访问控制
+		// 主体(Subject)进行身份认证后要分配权限(Permission)方可访问系统资源(Resource)，某些资源没有权限是无法访问的。
+		// 资源，如系统菜单、页面、按钮、类方法、系统商品信息等。资源包括资源类型和资源实例
+		// 授权方式：
+		// 1.基于角色的访问控制（Role-Based Access Control）
+		// 2.基于资源的访问控制（Resource-Based Access Control），结合权限字符串使用
+		if (subject.isAuthenticated()) {
+			// 基于单角色的权限控制
+			String roleIdentifier = "admin";
+			boolean hasRole = subject.hasRole(roleIdentifier);
+			System.out.println("用户是否分配\"admin\"角色权限：" + ((hasRole) ? "Y" : "N"));
+
+			// 基于多角色的权限控制
+			boolean hasAllRoles = subject.hasAllRoles(Arrays.asList("admin", "user"));
+			System.out.println("用户是否分配\"admin + user\"角色权限：" + ((hasAllRoles) ? "Y" : "N"));
+
+			// 基于多角色中任一角色的权限控制
+			boolean[] hasAnyRoles = subject.hasRoles(Arrays.asList("admin", "user", "super"));
+			for (boolean checking : hasAnyRoles) {
+				System.out.println("用户是否分配角色权限：" + ((checking) ? "Y" : "N"));
+			}
+
+			// 基于资源的访问控制
+			// 权限字符串的规则是：资源标识符:操作:资源实例标识符，可以使用"*"通配符
+			String permission = "user:update:001";
+			boolean permitted = subject.isPermitted(permission);
+			System.out.println("用户是否分配\"user:*:001\"资源的权限：" + ((permitted) ? "Y" : "N"));
+			// 分别具有哪些资源的访问权限
+			boolean[] permits = subject.isPermitted("user:update:001", "product:*:001");
+			for (boolean checking : permits) {
+				System.out.println("用户是否分配资源的权限：" + ((checking) ? "Y" : "N"));
+			}
+			// 同时具有哪些资源的访问权限
+			boolean permittedAll = subject.isPermittedAll("user:update:001", "product:*:001");
+			System.out.println("用户是否同时具备分配资源的权限：" + ((permittedAll) ? "Y" : "N"));
+		}
 	}
 
 	public static void main(String[] args) {
 		try {
 			AuthenticatorDemo demo = new AuthenticatorDemo();
-			
+
+			// 不同Realm认证方式不能混用
 			// demo.iniRealmAuth("rockpile", "pwd123");
 			// demo.iniRealmAuth("unregist", "pwd123");
 			// demo.iniRealmAuth("rockpile", "wrongpwd");
-			
+
 			demo.customerRealmAuth("rockpile", "pwd123");
 			System.out.println("... end");
 		} catch (Exception e) {

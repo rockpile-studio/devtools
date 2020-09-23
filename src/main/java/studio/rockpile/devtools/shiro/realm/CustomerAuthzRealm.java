@@ -6,6 +6,7 @@ import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
@@ -31,17 +32,35 @@ public class CustomerAuthzRealm extends AuthorizingRealm {
 			// 这里的密码是MD5+Salt加密后的字符串
 			// 通过SimpleEncrypter.shiroMd5Hash()，可以计算"pwd123"对应的密文字符
 			String password = "5fb0aa535df6f5c11380ccaee87bd84f";
-			SimpleAuthenticationInfo authInfo = new SimpleAuthenticationInfo(username, password,
+			SimpleAuthenticationInfo authcInfo = new SimpleAuthenticationInfo(username, password,
 					ByteSource.Util.bytes(MD5_SALT), this.getName());
-			return authInfo;
+			return authcInfo;
 		}
 		return null;
 	}
 
-	// doGetAuthorizationInfo()完成用户的授权
+	// doGetAuthorizationInfo()完成用户的授权，"授权"即访问控制
+	// 主体(Subject)进行身份认证后要分配权限(Permission)方可访问系统资源(Resource)，某些资源没有权限是无法访问的。
+	// 资源，如系统菜单、页面、按钮、类方法、系统商品信息等。资源包括资源类型和资源实例
+	// 授权方式：
+	// 基于角色的访问控制（Role-Based Access Control）
+	// 基于资源的访问控制（Resource-Based Access Control），结合权限字符串使用
+	// 权限字符串的规则是：资源标识符:操作:资源实例标识符，可以使用"*"通配符
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-		return null;
+		// 获取主身份信息，即登陆用户名username
+		String primaryPrincipal = (String) principals.getPrimaryPrincipal();
+		System.out.println("... primaryPrincipal : " + primaryPrincipal);
+		
+		// 根据身份信息，获取数据库中当前用户的角色信息和权限信息
+		// 将数据库中查询的角色信息赋值给SimpleAuthorizationInfo
+		SimpleAuthorizationInfo authzInfo = new SimpleAuthorizationInfo();
+		authzInfo.addRole("admin");
+		authzInfo.addRole("user");
+		// 将数据库中查询的权限信息赋值给权限对象
+		authzInfo.addStringPermission("user:*:*");
+		
+		return authzInfo;
 	}
 
 }
