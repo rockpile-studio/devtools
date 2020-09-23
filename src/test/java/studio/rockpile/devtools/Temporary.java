@@ -5,9 +5,17 @@ import java.util.Calendar;
 import org.junit.Test;
 
 import studio.rockpile.devtools.util.SimpleBloomExecutor;
+import studio.rockpile.devtools.util.SimpleEncrypter;
 
 public class Temporary {
-
+	
+	@Test
+	public void shiroMd5Hash() {
+		String password = "pwd123";
+		String encrypt = SimpleEncrypter.shiroSaltMd5(password);
+		System.out.println("encrypt : " + encrypt);
+	}
+	
 	@Test
 	public void testBloom() {
 		try {
