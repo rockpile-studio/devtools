@@ -1,16 +1,21 @@
 package studio.rockpile.devtools.protocol;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 @ApiModel(description = "服务请求通用结果类")
 public class CommonResult<T> {
 
-	public final static Integer SUCC = 200;
-	public final static Integer ERROR = 500;
+	public final static Integer HTTP_OK = 200;
+	public final static Integer HTTP_ERROR = 500;
 
+	@ApiModelProperty("应答时间")
+	private Date timestamp;
 	@ApiModelProperty("返回码")
-	private Integer code;
+	private Integer status;
 	@ApiModelProperty("返回信息")
 	private String message;
 	@ApiModelProperty("结果数据")
@@ -19,23 +24,27 @@ public class CommonResult<T> {
 	private CommonResult() {
 	}
 
-	public static <T> CommonResult<T> succ(T data) {
+	public static <T> CommonResult<T> success(T data) {
 		CommonResult<T> result = new CommonResult<>();
-		result.setCode(SUCC);
+		result.setTimestamp(Calendar.getInstance().getTime());
+		result.setStatus(HTTP_OK);
+		result.setMessage("请求成功处理!");
 		result.setData(data);
 		return result;
 	}
 
-	public static <T> CommonResult<T> error(String message) {
+	public static <T> CommonResult<T> failed(String message) {
 		CommonResult<T> result = new CommonResult<>();
-		result.setCode(ERROR);
+		result.setTimestamp(Calendar.getInstance().getTime());
+		result.setStatus(HTTP_ERROR);
 		result.setMessage(message);
 		return result;
 	}
 
-	public static <T> CommonResult<T> error(Integer code, String message, T data) {
+	public static <T> CommonResult<T> failed(Integer code, String message, T data) {
 		CommonResult<T> result = new CommonResult<>();
-		result.setCode(code);
+		result.setTimestamp(Calendar.getInstance().getTime());
+		result.setStatus(code);
 		result.setMessage(message);
 		result.setData(data);
 		return result;
@@ -43,15 +52,23 @@ public class CommonResult<T> {
 
 	@Override
 	public String toString() {
-		return "CommonResult [code=" + code + ", message=" + message + ", data=" + data + "]";
+		return "CommonResult [status=" + status + ", message=" + message + ", data=" + data + "]";
 	}
 
-	public Integer getCode() {
-		return code;
+	public Date getTimestamp() {
+		return timestamp;
 	}
 
-	public void setCode(Integer code) {
-		this.code = code;
+	public void setTimestamp(Date timestamp) {
+		this.timestamp = timestamp;
+	}
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
 
 	public String getMessage() {

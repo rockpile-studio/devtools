@@ -19,7 +19,8 @@ public class SwaggerConfig {
 	@Value("${swagger.external.config.enable}")
 	private boolean enable = false;
 
-	// swagger-ui访问页面：http://127.0.0.1:5030/swagger-ui.html
+	// swagger-ui访问页面：http://127.0.0.1:5030/devtools/swagger-ui.html
+	// 注意：这里url路径中"/devtools"是因为server.servlet.context-path配置
 	@Bean
 	public Docket docket() {
 		ApiInfo info = new ApiInfoBuilder().title("Rockpile开发者工具的API文档").description("API Documentation")
@@ -33,10 +34,11 @@ public class SwaggerConfig {
 		// .basePackage("studio.rockpile.devtools.controller") 指定要扫描的包
 		// .withClassAnnotation(RestController.class) 扫描类上的注解
 		// .withMethodAnnotation(RequestMapping.class) 扫描方法上的注解
-		// docket.paths(PathSelectors.ant("/rockpile/devtools/**")) 配置过滤的url路径
+		// docket.paths(PathSelectors.ant("/**")) 配置过滤的url路径，
+		// 这里PathSelectors.ant()配置的uri路径要去掉server.servlet.context-path=/devtools的部分
 		docket.select().apis(RequestHandlerSelectors.withClassAnnotation(RestController.class))
 				.apis(RequestHandlerSelectors.basePackage("studio.rockpile.devtools"))
-				.paths(PathSelectors.ant("/rockpile/devtools/**")).build();
+				.paths(PathSelectors.ant("/**")).build();
 		return docket;
 	}
 

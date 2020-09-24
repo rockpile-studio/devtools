@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -14,7 +14,7 @@ import io.swagger.annotations.ApiModelProperty;
 public class UserInfo {
 
 	@ApiModelProperty("姓名")
-	@NotEmpty(message = "姓名不能为空")
+	@NotBlank(message = "姓名不能为空")
 	private String name;
 
 	@ApiModelProperty("年龄")
