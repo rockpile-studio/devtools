@@ -12,7 +12,7 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 
 // 自定义Realm实现，将认证&授权的数据源转为数据库
-public class CustomerAuthzRealm extends AuthorizingRealm {
+public class DemoCustomerRealm extends AuthorizingRealm {
 	public final static String MD5_SALT = "8tdixRd65fWhGShP";
 	public final static Integer HASH_ITERATIONS = 1024;
 

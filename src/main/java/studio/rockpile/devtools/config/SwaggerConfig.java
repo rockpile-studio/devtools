@@ -28,7 +28,7 @@ public class SwaggerConfig {
 
 		// 配置Swagger信息
 		Docket docket = new Docket(DocumentationType.SWAGGER_2).apiInfo(info).enable(enable)
-				.groupName("Rockpile DevTools");
+				.groupName("rockpile-devtools");
 
 		// docket.apis(RequestHandlerSelectors....) 配置要扫描接口的方式
 		// .basePackage("studio.rockpile.devtools.controller") 指定要扫描的包
@@ -38,7 +38,7 @@ public class SwaggerConfig {
 		// 这里PathSelectors.ant()配置的uri路径要去掉server.servlet.context-path=/devtools的部分
 		docket.select().apis(RequestHandlerSelectors.withClassAnnotation(RestController.class))
 				.apis(RequestHandlerSelectors.basePackage("studio.rockpile.devtools"))
-				.paths(PathSelectors.ant("/**")).build();
+				.paths(PathSelectors.any()).build();
 		return docket;
 	}
 
