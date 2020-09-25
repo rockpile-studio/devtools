@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author rockpile
- * @since 2020-09-24
+ * @since 2020-09-25
  */
 @Service
 public class UserProviderImpl extends ServiceImpl<UserMapper, User> implements UserProvider {

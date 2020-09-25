@@ -57,7 +57,7 @@ public class MyBatisPlusGenerator {
 			}
 		});
 
-		String[] tableNames = { "sys_user" };
+		String[] tableNames = { "sys_user", "sys_role", "sys_user_role" };
 
 		StrategyConfig strategyConf = new StrategyConfig();
 		strategyConf.setNaming(NamingStrategy.underline_to_camel);

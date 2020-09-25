@@ -1,16 +1,16 @@
 package studio.rockpile.devtools.dao;
 
-import studio.rockpile.devtools.entity.User;
+import studio.rockpile.devtools.entity.UserRole;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
  * <p>
- * 用户 Mapper 接口
+ * 用户角色 Mapper 接口
  * </p>
  *
  * @author rockpile
  * @since 2020-09-25
  */
-public interface UserMapper extends BaseMapper<User> {
+public interface UserRoleMapper extends BaseMapper<UserRole> {
 
 }
