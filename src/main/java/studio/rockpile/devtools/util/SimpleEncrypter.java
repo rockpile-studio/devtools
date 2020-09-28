@@ -5,6 +5,7 @@ import java.nio.charset.Charset;
 import java.util.Random;
 
 import org.apache.shiro.crypto.hash.Md5Hash;
+import org.springframework.util.DigestUtils;
 
 import studio.rockpile.devtools.shiro.realm.DemoCustomerRealm;
 
@@ -12,11 +13,27 @@ public class SimpleEncrypter {
 	private static final int RADIX = 16;
 	private static final String SEED = "0933910847463829827159347601486730416058";
 	public static final int ENCRYPTED_PREFIX_LENGTH = 10;
+	private final static char[] hexArray = "0123456789ABCDEF".toCharArray();
 
 	public static String shiroMd5Hash(String message) {
 		Md5Hash md5 = new Md5Hash(message, DemoCustomerRealm.MD5_SALT, DemoCustomerRealm.HASH_ITERATIONS);
 		return md5.toHex();
 	}
+	
+	public static String md5( String text ) {
+		// 通过spring工具类方法，生成32位小写的MD5信息摘要
+		return DigestUtils.md5DigestAsHex(text.getBytes());
+	}
+	
+    public static String bytesToHex(byte... bytes) {
+        char[] hexChars = new char[bytes.length * 2];
+        for (int j = 0; j < bytes.length; j++) {
+            int v = bytes[j] & 0xFF;
+            hexChars[j * 2] = hexArray[v >>> 4];
+            hexChars[j * 2 + 1] = hexArray[v & 0x0F];
+        }
+        return new String(hexChars);
+    }
 
 	public static String getRandomString(int length) {
 		StringBuilder buff = new StringBuilder();
