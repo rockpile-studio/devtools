@@ -23,13 +23,12 @@ public class Temporary {
 			StringBuilder text = new StringBuilder();
 			text.append(fillId).append(",").append(instanceId).append(",").append(securityKey);
 
-
 			MessageDigest digest = MessageDigest.getInstance("MD5");
 			System.out.println("MD5摘要长度：" + digest.getDigestLength());
 			byte[] bytes = digest.digest(text.toString().getBytes());
-			String md5 =  SimpleEncrypter.bytesToHex(bytes);
+			String md5 = SimpleEncrypter.bytesToHex(bytes);
 			System.out.println("... md5 : " + md5);
-			
+
 			md5 = DigestUtils.md5DigestAsHex(text.toString().getBytes());
 			System.out.println("... md5 : " + md5);
 		} catch (NoSuchAlgorithmException e) {
