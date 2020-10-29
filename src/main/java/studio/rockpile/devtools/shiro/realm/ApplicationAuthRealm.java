@@ -58,11 +58,10 @@ public class ApplicationAuthRealm extends AuthorizingRealm {
 			User user = userProvider.getOne(wrapper);
 			if (ObjectUtils.isNotEmpty(user)) {
 				List<Role> roles = roleProvider.queryByUserId(user.getId());
-				for (Role role : roles) {
+				for (@SuppressWarnings("unused") Role role : roles) {
 					SimpleAuthorizationInfo authzInfo = new SimpleAuthorizationInfo();
 					authzInfo.addRole("admin");
 					authzInfo.addRole("user");
-					
 				}
 			}
 
