@@ -24,7 +24,7 @@ import studio.rockpile.devtools.protocol.CommonResult;
 import studio.rockpile.devtools.protocol.SysLoginDTO;
 import studio.rockpile.devtools.provider.UserProvider;
 import studio.rockpile.devtools.shiro.realm.ApplicationAuthRealm;
-import studio.rockpile.devtools.util.SimpleEncrypter;
+import studio.rockpile.devtools.util.SimpleEncryptor;
 
 /**
  * <p>
@@ -76,7 +76,7 @@ public class UserController {
 			user.setRegistTime(Calendar.getInstance().getTime());
 			
 			String password = user.getPassword();
-			String salt = SimpleEncrypter.getRandomString(8);
+			String salt = SimpleEncryptor.getRandomString(8);
 			Md5Hash md5Hash = new Md5Hash(password, salt, ApplicationAuthRealm.HASH_ITERATIONS);
 			user.setPassword(md5Hash.toHex());
 			user.setRandomSalt(salt);

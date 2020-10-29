@@ -8,7 +8,7 @@ import org.junit.Test;
 import org.springframework.util.DigestUtils;
 
 import studio.rockpile.devtools.util.SimpleBloomExecutor;
-import studio.rockpile.devtools.util.SimpleEncrypter;
+import studio.rockpile.devtools.util.SimpleEncryptor;
 
 public class Temporary {
 
@@ -26,7 +26,7 @@ public class Temporary {
 			MessageDigest digest = MessageDigest.getInstance("MD5");
 			System.out.println("MD5摘要长度：" + digest.getDigestLength());
 			byte[] bytes = digest.digest(text.toString().getBytes());
-			String md5 = SimpleEncrypter.bytesToHex(bytes);
+			String md5 = SimpleEncryptor.bytesToHex(bytes);
 			System.out.println("... md5 : " + md5);
 
 			md5 = DigestUtils.md5DigestAsHex(text.toString().getBytes());
@@ -39,7 +39,7 @@ public class Temporary {
 	@Test
 	public void shiroMd5Hash() {
 		String password = "pwd123";
-		String encrypt = SimpleEncrypter.shiroMd5Hash(password);
+		String encrypt = SimpleEncryptor.shiroMd5Hash(password);
 		System.out.println("encrypt : " + encrypt);
 	}
 

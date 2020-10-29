@@ -9,7 +9,7 @@ import org.springframework.util.DigestUtils;
 
 import studio.rockpile.devtools.shiro.realm.DemoCustomerRealm;
 
-public class SimpleEncrypter {
+public class SimpleEncryptor {
 	private static final int RADIX = 16;
 	private static final String SEED = "0933910847463829827159347601486730416058";
 	public static final int ENCRYPTED_PREFIX_LENGTH = 10;
@@ -60,7 +60,7 @@ public class SimpleEncrypter {
 	}
 
 	public static final String encryptPassword(String password) {
-		return SimpleEncrypter.encryptPassword(password, "UTF-8");
+		return SimpleEncryptor.encryptPassword(password, "UTF-8");
 	}
 
 	public static final String encryptPassword(String password, String charset) {
@@ -78,7 +78,7 @@ public class SimpleEncrypter {
 	}
 
 	public static final String decryptPassword(String encrypted) {
-		return SimpleEncrypter.decryptPassword(encrypted, "UTF-8");
+		return SimpleEncryptor.decryptPassword(encrypted, "UTF-8");
 	}
 
 	public static final String decryptPassword(String encrypted, String charset) {
