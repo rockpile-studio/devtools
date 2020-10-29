@@ -9,7 +9,7 @@ import org.springframework.util.DigestUtils;
 
 import studio.rockpile.devtools.shiro.realm.DemoCustomerRealm;
 
-public class SimpleEncryptor {
+public class SimpleStringEncryptor {
 	private static final int RADIX = 16;
 	private static final String SEED = "0933910847463829827159347601486730416058";
 	public static final int ENCRYPTED_PREFIX_LENGTH = 10;
@@ -19,21 +19,33 @@ public class SimpleEncryptor {
 		Md5Hash md5 = new Md5Hash(message, DemoCustomerRealm.MD5_SALT, DemoCustomerRealm.HASH_ITERATIONS);
 		return md5.toHex();
 	}
-	
-	public static String md5( String text ) {
-		// 通过spring工具类方法，生成32位小写的MD5信息摘要
+
+	// 通过spring工具类方法，生成32位小写的MD5信息摘要
+	public static String md5(String text) {
 		return DigestUtils.md5DigestAsHex(text.getBytes());
 	}
-	
-    public static String bytesToHex(byte... bytes) {
-        char[] hexChars = new char[bytes.length * 2];
-        for (int j = 0; j < bytes.length; j++) {
-            int v = bytes[j] & 0xFF;
-            hexChars[j * 2] = hexArray[v >>> 4];
-            hexChars[j * 2 + 1] = hexArray[v & 0x0F];
-        }
-        return new String(hexChars);
-    }
+
+	public static String bytesToHex(byte... bytes) {
+		char[] hexChars = new char[bytes.length * 2];
+		for (int j = 0; j < bytes.length; j++) {
+			int v = bytes[j] & 0xFF;
+			hexChars[j * 2] = hexArray[v >>> 4];
+			hexChars[j * 2 + 1] = hexArray[v & 0x0F];
+		}
+		return new String(hexChars);
+	}
+
+	public static byte[] hexToBytes(String hex) {
+		hex = hex.length() % 2 != 0 ? "0" + hex : hex;
+
+		byte[] b = new byte[hex.length() / 2];
+		for (int i = 0; i < b.length; i++) {
+			int index = i * 2;
+			int v = Integer.parseInt(hex.substring(index, index + 2), 16);
+			b[i] = (byte) v;
+		}
+		return b;
+	}
 
 	public static String getRandomString(int length) {
 		StringBuilder buff = new StringBuilder();
@@ -60,7 +72,7 @@ public class SimpleEncryptor {
 	}
 
 	public static final String encryptPassword(String password) {
-		return SimpleEncryptor.encryptPassword(password, "UTF-8");
+		return SimpleStringEncryptor.encryptPassword(password, "UTF-8");
 	}
 
 	public static final String encryptPassword(String password, String charset) {
@@ -78,7 +90,7 @@ public class SimpleEncryptor {
 	}
 
 	public static final String decryptPassword(String encrypted) {
-		return SimpleEncryptor.decryptPassword(encrypted, "UTF-8");
+		return SimpleStringEncryptor.decryptPassword(encrypted, "UTF-8");
 	}
 
 	public static final String decryptPassword(String encrypted, String charset) {
