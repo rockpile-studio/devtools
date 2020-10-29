@@ -3,7 +3,6 @@ package studio.rockpile.devtools.util;
 import java.security.AlgorithmParameters;
 import java.security.Key;
 import java.security.Security;
-import java.util.Arrays;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
