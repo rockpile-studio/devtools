@@ -7,10 +7,17 @@ import java.util.Calendar;
 import org.junit.Test;
 import org.springframework.util.DigestUtils;
 
+import com.baomidou.mybatisplus.core.toolkit.IdWorker;
+
 import studio.rockpile.devtools.util.SimpleBloomExecutor;
 import studio.rockpile.devtools.util.SimpleStringEncryptor;
 
 public class Temporary {
+	
+	@Test
+	public void demo() {
+		IdWorker.getId();
+	}
 
 	@Test
 	public void encryptByAKSK() {
