@@ -1,12 +1,7 @@
 package studio.rockpile.devtools.controller;
 
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.bind.annotation.RestController;
-
-import studio.rockpile.devtools.provider.UserRoleProvider;
 
 /**
  * <p>
@@ -20,7 +15,4 @@ import studio.rockpile.devtools.provider.UserRoleProvider;
 @RequestMapping("/userRole")
 public class UserRoleController {
 
-	@Autowired
-	private UserRoleProvider userRoleProvider;
 }
-
