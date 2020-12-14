@@ -34,8 +34,10 @@ public class CronExpressionUtil {
         Date t2 = trigger.getFireTimeAfter(t1);
         Date t3 = trigger.getFireTimeAfter(t2);
 
+        long ts2 = Long.parseLong(dateFormat.format(t2));
+        long ts3 = Long.parseLong(dateFormat.format(t3));
         // 完整自然月偏移，特殊处理
-        if ((Long.parseLong(dateFormat.format(t3)) - Long.parseLong(dateFormat.format(t2))) % 1000000 == 0) {
+        if ((ts3 - ts2) % 100000000 == 0) {
             // y-years, M-months, d-days, H-hours, m-minutes, s-seconds, S-milliseconds
             String[] periods = DurationFormatUtils.formatPeriod(t2.getTime(), t3.getTime(), "y-M").split("-");
             int monthOffset = Integer.parseInt(periods[0]) * 12 + Integer.parseInt(periods[1]);

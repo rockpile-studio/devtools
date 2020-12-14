@@ -10,8 +10,8 @@ public class CronTriggerDemo {
     @Test
     public void getPreviousDate() {
         try {
-            String startTimeCronExpr = "0 0 19 02 * ?";
-            Integer duraMinutes = 60;
+            String startTimeCronExpr = "0 58 10 * * ?";
+            Integer duraMinutes = 5;
             long begin = CronExpressionUtil.getPreviousFireTime(startTimeCronExpr).getTime();
 //            long next = CronExpressionUtil.getNextFireTime(startTimeCronExpr).getTime();
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss ");
