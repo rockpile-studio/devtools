@@ -160,6 +160,30 @@
             <version>4.0.30.Final</version><!--$NO-MVN-MAN-VER$ -->
         </dependency>
 
+        <!-- HBase 1.3.1 -->
+        <dependency>
+            <groupId>org.apache.hbase</groupId>
+            <artifactId>hbase-server</artifactId>
+            <version>1.3.1</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-log4j12</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.hbase</groupId>
+            <artifactId>hbase-client</artifactId>
+            <version>1.3.1</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-log4j12</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
         <!-- scope：用来指定当前包的依赖范围 -->
         <!-- compile（编译范围），是默认的范围，编译范围依赖在所有的classpath中可用，同时它们也会被打包。 -->
         <!-- provided（已提供范围），只有在当JDK或者一个容器已提供该依赖之后才使用。 -->
