@@ -97,6 +97,21 @@
             <version>28.0-jre</version>
         </dependency>
 
+        <!-- spring batch -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-batch</artifactId>
+        </dependency>
+        <!-- 内存数据库H2 -->
+        <!-- 相较于Derby、HSQL，对语法的支持以及数据类型之类的与MySQL的兼容都是最高的 -->
+        <!-- 唯一的问题就是返回默认大写，需增加配置项指定 -->
+        <!-- <dependency> -->
+        <!--     <groupId>com.h2database</groupId> -->
+        <!--     <artifactId>h2</artifactId> -->
+        <!--     <version>1.4.200</version> -->
+        <!--     <scope>runtime</scope> -->
+        <!-- </dependency> -->
+
         <!-- quartz -->
         <dependency>
             <groupId>org.quartz-scheduler</groupId>
@@ -243,6 +258,7 @@
                 <configuration>
                     <fork>true</fork>
                     <addResources>true</addResources>
+                    <includeSystemScope>true</includeSystemScope>
                 </configuration>
             </plugin>
         </plugins>
