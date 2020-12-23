@@ -2,8 +2,7 @@ package studio.rockpile.devtools.springbatch;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.batch.core.Job;
-import org.springframework.batch.core.Step;
+import org.springframework.batch.core.*;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepScope;
@@ -26,12 +25,12 @@ import org.springframework.validation.BindException;
 import studio.rockpile.devtools.entity.Account;
 import studio.rockpile.devtools.springbatch.listener.DemoChunkListener;
 
-import javax.annotation.processing.Processor;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 
 @Configuration
 public class ItemProcessorJobDemo {
@@ -43,6 +42,8 @@ public class ItemProcessorJobDemo {
     @Autowired
     @Qualifier(value = "demoFilterItemProcessor")
     private ItemProcessor<Account, Account> demoFilterItemProcessor;
+
+    private Map<String, JobParameter> params;
 
     private final JobBuilderFactory jobBuilderFactory;
     private final StepBuilderFactory stepBuilderFactory;
@@ -97,7 +98,7 @@ public class ItemProcessorJobDemo {
     @Bean
     public CompositeItemProcessor<Account, Account> multiProcessor() {
         CompositeItemProcessor<Account, Account> processor = new CompositeItemProcessor<Account, Account>();
-        List<ItemProcessor<Account,Account>> delegates = new ArrayList<>();
+        List<ItemProcessor<Account, Account>> delegates = new ArrayList<>();
         delegates.add(demoItemProcessor);
         delegates.add(demoFilterItemProcessor);
         processor.setDelegates(delegates);
