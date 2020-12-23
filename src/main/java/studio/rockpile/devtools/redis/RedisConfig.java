@@ -2,6 +2,9 @@ package studio.rockpile.devtools.redis;
 
 import java.text.SimpleDateFormat;
 
+import com.fasterxml.jackson.databind.*;
+import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -14,10 +17,6 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
-import com.fasterxml.jackson.databind.SerializationFeature;
 
 @Configuration
 @AutoConfigureAfter(RedisAutoConfiguration.class)
@@ -36,11 +35,12 @@ public class RedisConfig {
 		// value的序列化方式，使用Json。其中的日期再另外处理
 		Jackson2JsonRedisSerializer<Object> valSerializer = new Jackson2JsonRedisSerializer<>(Object.class);
 		ObjectMapper jsonMapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-				.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL)
+				.configure(MapperFeature.PROPAGATE_TRANSIENT_MARKER, true) // 序列化时忽略transient属性
 				.setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE)
 				.setSerializationInclusion(Include.NON_NULL).configure(SerializationFeature.INDENT_OUTPUT, false)
 				.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"))
-				.setVisibility(PropertyAccessor.ALL, Visibility.ANY);
+				.registerModule(new SimpleModule().addSerializer(Long.class, ToStringSerializer.instance)
+						.addSerializer(Long.TYPE, ToStringSerializer.instance));
 		valSerializer.setObjectMapper(jsonMapper);
 		redisTemplate.setValueSerializer(valSerializer);
 		redisTemplate.setHashValueSerializer(valSerializer);

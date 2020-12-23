@@ -5,6 +5,8 @@
     <appender name="CONSOLE"
               class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
+            <!-- <pattern>${CONSOLE_LOG_PATTERN}</pattern> -->
+            <!-- <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %class.%method Line:%-3L - %msg%n</pattern> -->
             <pattern>${CONSOLE_LOG_PATTERN}</pattern>
             <charset>UTF-8</charset>
         </encoder>
@@ -13,7 +15,9 @@
     <appender name="ROLLING-FILE"
               class="ch.qos.logback.core.rolling.RollingFileAppender">
         <encoder>
-            <pattern>${FILE_LOG_PATTERN}</pattern>
+            <!-- <pattern>${FILE_LOG_PATTERN}</pattern> -->
+            <!-- <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %class.%method Line:%-3L - %msg%n</pattern> -->
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
             <charset>UTF-8</charset>
         </encoder>
         <file>${LOG_FILE}</file>
@@ -33,7 +37,7 @@
     <logger name="org.apache.hadoop" level="INFO"/>
     <logger name="studio.rockpile.devtools" level="DEBUG"/>
 
-    <root level="INFO">
+    <root level="DEBUG">
         <appender-ref ref="CONSOLE"/>
         <appender-ref ref="ROLLING-FILE"/>
     </root>
