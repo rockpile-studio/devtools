@@ -1,4 +1,4 @@
-package studio.rockpile.devtools.springbatch;
+package studio.rockpile.devtools.batch;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,9 +19,9 @@ import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.task.SimpleAsyncTaskExecutor;
-import studio.rockpile.devtools.springbatch.decider.DemoDecider;
-import studio.rockpile.devtools.springbatch.listener.DemoChunkListener;
-import studio.rockpile.devtools.springbatch.listener.DemoJobListener;
+import studio.rockpile.devtools.batch.decider.DemoDecider;
+import studio.rockpile.devtools.batch.listener.DemoChunkListener;
+import studio.rockpile.devtools.batch.listener.DemoJobListener;
 
 import java.util.Arrays;
 import java.util.Calendar;

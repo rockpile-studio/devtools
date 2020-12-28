@@ -1,4 +1,4 @@
-package studio.rockpile.devtools.springbatch.decider;
+package studio.rockpile.devtools.batch.decider;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,4 +1,4 @@
-package studio.rockpile.devtools.springbatch.item;
+package studio.rockpile.devtools.batch.item;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;

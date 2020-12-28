@@ -1,9 +1,8 @@
-package studio.rockpile.devtools.springbatch.listener;
+package studio.rockpile.devtools.batch.listener;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.*;
-import org.springframework.context.annotation.Configuration;
 
 // 监听器用来监听批处理作业的执行情况
 // 创建监听可以通过实现接口或者使用注解（注解参见DemoChunkListener）

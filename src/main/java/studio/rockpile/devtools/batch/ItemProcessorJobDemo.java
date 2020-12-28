@@ -1,4 +1,4 @@
-package studio.rockpile.devtools.springbatch;
+package studio.rockpile.devtools.batch;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +23,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.validation.BindException;
 import studio.rockpile.devtools.entity.Account;
-import studio.rockpile.devtools.springbatch.listener.DemoChunkListener;
+import studio.rockpile.devtools.batch.listener.DemoChunkListener;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -110,7 +110,7 @@ public class ItemProcessorJobDemo {
     public FlatFileItemReader<Account> itemProcessorDemoRead() {
         final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         FlatFileItemReader<Account> fileItemReader = new FlatFileItemReader<>();
-        fileItemReader.setResource(new ClassPathResource("account-data.txt"));
+        fileItemReader.setResource(new ClassPathResource("dataset/account-data.txt"));
         fileItemReader.setLinesToSkip(1); /*跳过第一行*/
         // 解析数据
         DelimitedLineTokenizer tokenizer = new DelimitedLineTokenizer();

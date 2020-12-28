@@ -1,4 +1,4 @@
-package studio.rockpile.devtools.springbatch.item;
+package studio.rockpile.devtools.batch.item;
 
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.stereotype.Component;

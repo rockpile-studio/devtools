@@ -1,4 +1,4 @@
-package studio.rockpile.devtools.springbatch.item;
+package studio.rockpile.devtools.batch.item;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -26,7 +26,7 @@ public class DemoItemRestartReader implements ItemStreamReader<Account> {
     private ExecutionContext executionContext;
 
     public DemoItemRestartReader() {
-        fileItemReader.setResource(new ClassPathResource("account-data.txt"));
+        fileItemReader.setResource(new ClassPathResource("dataset/account-data.txt"));
         fileItemReader.setLinesToSkip(1); /*跳过第一行*/
         // 解析数据
         DelimitedLineTokenizer tokenizer = new DelimitedLineTokenizer();

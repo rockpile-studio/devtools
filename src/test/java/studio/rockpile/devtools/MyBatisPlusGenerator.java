@@ -57,14 +57,20 @@ public class MyBatisPlusGenerator {
 			}
 		});
 
-		String[] tableNames = { "sys_user", "sys_role", "sys_user_role" };
+		String[] tableNames = { "rbp_decider_meta",
+				"rbp_job_meta",
+				"rbp_job_named_param",
+				"rbp_seg_node_def",
+				"rbp_step_link_meta",
+				"rbp_step_meta",
+				"rbp_step_property" };
 
 		StrategyConfig strategyConf = new StrategyConfig();
 		strategyConf.setNaming(NamingStrategy.underline_to_camel);
 		strategyConf.setColumnNaming(NamingStrategy.underline_to_camel);
 		strategyConf.setEntityLombokModel(false);
 		strategyConf.setRestControllerStyle(true);
-		strategyConf.setTablePrefix("sys_");
+		strategyConf.setTablePrefix("rbp_");
 		strategyConf.setInclude(tableNames);
 		// strategyConf.setSuperEntityClass(BaseEntity.class.getName());
 		// strategyConf.setSuperEntityColumns(new String[] { "id", "is_del" });
