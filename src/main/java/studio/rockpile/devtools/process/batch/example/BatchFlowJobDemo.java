@@ -1,4 +1,4 @@
-package studio.rockpile.devtools.batch;
+package studio.rockpile.devtools.process.batch.example;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,19 +9,18 @@ import org.springframework.batch.core.configuration.annotation.JobBuilderFactory
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.job.builder.FlowBuilder;
 import org.springframework.batch.core.job.flow.Flow;
-import org.springframework.batch.core.job.flow.JobExecutionDecider;
 import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.core.step.tasklet.TaskletStep;
 import org.springframework.batch.item.*;
 import org.springframework.batch.item.support.ListItemReader;
 import org.springframework.batch.repeat.RepeatStatus;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.task.SimpleAsyncTaskExecutor;
-import studio.rockpile.devtools.batch.decider.DemoDecider;
-import studio.rockpile.devtools.batch.listener.DemoChunkListener;
-import studio.rockpile.devtools.batch.listener.DemoJobListener;
+import studio.rockpile.devtools.process.batch.listener.ChunkStepListener;
+import studio.rockpile.devtools.process.batch.listener.DemoJobListener;
 
 import java.util.Arrays;
 import java.util.Calendar;
@@ -48,6 +47,9 @@ public class BatchFlowJobDemo {
 
     private final JobBuilderFactory jobBuilderFactory;
     private final StepBuilderFactory stepBuilderFactory;
+
+    @Autowired
+    private DemoDecider demoDecider;
 
     public BatchFlowJobDemo(JobBuilderFactory jobBuilderFactory, StepBuilderFactory stepBuilderFactory) {
         this.jobBuilderFactory = jobBuilderFactory;
@@ -91,10 +93,10 @@ public class BatchFlowJobDemo {
         // 示例执行流程：step1 -> decider[ODD] -> step4 -> decider[EVEN] -> step2 -> end
         return jobBuilderFactory.get("demo_decider_job_" + String.valueOf(ts))
                 .start(demoStep1())
-                .next(demoDecider())
-                .from(demoDecider()).on("EVEN").to(demoStep2())
-                .from(demoDecider()).on("ODD").to(demoStep4())
-                .from(demoStep4()).on("*").to(demoDecider()) /*表示无论step3返回什么，均执行demoDecider，循环判断奇偶数*/
+                .next(demoDecider)
+                .from(demoDecider).on("EVEN").to(demoStep2())
+                .from(demoDecider).on("ODD").to(demoStep4())
+                .from(demoStep4()).on("*").to(demoDecider) /*表示无论step3返回什么，均执行demoDecider，循环判断奇偶数*/
                 .end()
                 .build();
     }
@@ -108,11 +110,6 @@ public class BatchFlowJobDemo {
                 .listener(new DemoJobListener())
                 .next(demoChunkStep())
                 .build();
-    }
-
-    @Bean
-    public JobExecutionDecider demoDecider() {
-        return new DemoDecider();
     }
 
     @Bean
@@ -158,7 +155,7 @@ public class BatchFlowJobDemo {
         TaskletStep step = stepBuilderFactory.get("demo_chunk_step_" + String.valueOf(ts))
                 .<String, String>chunk(3) /*chunkSize=20表示读取完20个数据，再进行输出处理，泛型中指定了输入输出的类型*/
                 .faultTolerant() /*容错*/
-                .listener(new DemoChunkListener()) /*chunk级别的监听*/
+                .listener(new ChunkStepListener()) /*chunk级别的监听*/
                 .reader(itemRead())
                 .writer(itemWrite())
                 .build();

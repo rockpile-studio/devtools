@@ -1,4 +1,4 @@
-package studio.rockpile.devtools.batch;
+package studio.rockpile.devtools.process.batch.example;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

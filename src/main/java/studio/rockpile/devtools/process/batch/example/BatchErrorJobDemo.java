@@ -1,4 +1,4 @@
-package studio.rockpile.devtools.batch;
+package studio.rockpile.devtools.process.batch.example;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +15,7 @@ import org.springframework.batch.core.step.tasklet.TaskletStep;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import studio.rockpile.devtools.process.batch.example.BatchFlowJobDemo;
 
 import java.util.Calendar;
 import java.util.Map;

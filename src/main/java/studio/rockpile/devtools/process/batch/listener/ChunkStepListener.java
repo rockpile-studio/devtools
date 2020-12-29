@@ -1,4 +1,4 @@
-package studio.rockpile.devtools.batch.listener;
+package studio.rockpile.devtools.process.batch.listener;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,8 +8,8 @@ import org.springframework.batch.core.annotation.BeforeChunk;
 import org.springframework.batch.core.scope.context.ChunkContext;
 
 // 通过注解的方式实现chunk的监听
-public class DemoChunkListener {
-    private static final Logger logger = LoggerFactory.getLogger(DemoChunkListener.class);
+public class ChunkStepListener {
+    private static final Logger logger = LoggerFactory.getLogger(ChunkStepListener.class);
 
     @BeforeChunk
     public void beforeChunk(ChunkContext context) {

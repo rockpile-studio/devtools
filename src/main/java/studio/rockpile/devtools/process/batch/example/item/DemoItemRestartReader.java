@@ -1,4 +1,4 @@
-package studio.rockpile.devtools.batch.item;
+package studio.rockpile.devtools.process.batch.example.item;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;

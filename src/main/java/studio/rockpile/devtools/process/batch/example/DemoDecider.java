@@ -1,4 +1,4 @@
-package studio.rockpile.devtools.batch.decider;
+package studio.rockpile.devtools.process.batch.example;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -6,7 +6,9 @@ import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.StepExecution;
 import org.springframework.batch.core.job.flow.FlowExecutionStatus;
 import org.springframework.batch.core.job.flow.JobExecutionDecider;
+import org.springframework.stereotype.Component;
 
+@Component
 public class DemoDecider implements JobExecutionDecider {
     private static final Logger logger = LoggerFactory.getLogger(DemoDecider.class);
     private Integer count = 0;

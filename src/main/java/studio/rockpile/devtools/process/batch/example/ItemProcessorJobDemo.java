@@ -1,4 +1,4 @@
-package studio.rockpile.devtools.batch;
+package studio.rockpile.devtools.process.batch.example;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +23,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.validation.BindException;
 import studio.rockpile.devtools.entity.Account;
-import studio.rockpile.devtools.batch.listener.DemoChunkListener;
+import studio.rockpile.devtools.process.batch.listener.ChunkStepListener;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -72,7 +72,7 @@ public class ItemProcessorJobDemo {
         TaskletStep step = stepBuilderFactory.get("item_processor_step_" + String.valueOf(ts))
                 .<Account, Account>chunk(10) /*chunkSize=20表示读取完20个数据，再进行输出处理，泛型中指定了输入输出的类型*/
                 .faultTolerant() /*容错*/
-                .listener(new DemoChunkListener()) /*chunk级别的监听*/
+                .listener(new ChunkStepListener()) /*chunk级别的监听*/
                 .reader(itemProcessorDemoRead())
                 .processor(demoItemProcessor)
                 .writer(itemProcessorDemoWrite())
@@ -87,7 +87,7 @@ public class ItemProcessorJobDemo {
         TaskletStep step = stepBuilderFactory.get("multi_item_processor_step_" + String.valueOf(ts))
                 .<Account, Account>chunk(10) /*chunkSize=20表示读取完20个数据，再进行输出处理，泛型中指定了输入输出的类型*/
                 .faultTolerant() /*容错*/
-                .listener(new DemoChunkListener()) /*chunk级别的监听*/
+                .listener(new ChunkStepListener()) /*chunk级别的监听*/
                 .reader(itemProcessorDemoRead())
                 .processor(multiProcessor())
                 .writer(itemProcessorDemoWrite())

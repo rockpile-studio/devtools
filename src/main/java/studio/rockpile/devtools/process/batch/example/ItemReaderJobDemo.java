@@ -1,4 +1,4 @@
-package studio.rockpile.devtools.batch;
+package studio.rockpile.devtools.process.batch.example;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,9 +27,9 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.validation.BindException;
 import studio.rockpile.devtools.entity.Account;
-import studio.rockpile.devtools.batch.item.DemoItemReader;
-import studio.rockpile.devtools.batch.item.DemoItemRestartReader;
-import studio.rockpile.devtools.batch.listener.DemoChunkListener;
+import studio.rockpile.devtools.process.batch.example.item.DemoItemReader;
+import studio.rockpile.devtools.process.batch.example.item.DemoItemRestartReader;
+import studio.rockpile.devtools.process.batch.listener.ChunkStepListener;
 
 import javax.sql.DataSource;
 import java.sql.ResultSet;
@@ -106,7 +106,7 @@ public class ItemReaderJobDemo {
         TaskletStep step = stepBuilderFactory.get("db_item_reader_step_" + String.valueOf(ts))
                 .<Account, Account>chunk(2) /*chunkSize=20表示读取完20个数据，再进行输出处理，泛型中指定了输入输出的类型*/
                 .faultTolerant() /*容错*/
-                .listener(new DemoChunkListener()) /*chunk级别的监听*/
+                .listener(new ChunkStepListener()) /*chunk级别的监听*/
                 .reader(dbItemRead())
                 .writer(demoItemWriter)
                 .build();
@@ -120,7 +120,7 @@ public class ItemReaderJobDemo {
         TaskletStep step = stepBuilderFactory.get("file_item_reader_step_" + String.valueOf(ts))
                 .<Account, Account>chunk(10) /*chunkSize=20表示读取完20个数据，再进行输出处理，泛型中指定了输入输出的类型*/
                 .faultTolerant() /*容错*/
-                .listener(new DemoChunkListener()) /*chunk级别的监听*/
+                .listener(new ChunkStepListener()) /*chunk级别的监听*/
                 .reader(fileItemRead())
                 .writer(jdbcItemWriter)
                 .build();
@@ -133,7 +133,7 @@ public class ItemReaderJobDemo {
         TaskletStep step = stepBuilderFactory.get("item_restart_reader_step_" + String.valueOf(ts))
                 .<Account, Account>chunk(10) /*chunkSize=20表示读取完20个数据，再进行输出处理，泛型中指定了输入输出的类型*/
                 .faultTolerant() /*容错*/
-                .listener(new DemoChunkListener()) /*chunk级别的监听*/
+                .listener(new ChunkStepListener()) /*chunk级别的监听*/
                 .reader(itemRestartReader)
                 .writer(demoItemWriter)
                 .build();
@@ -216,7 +216,7 @@ public class ItemReaderJobDemo {
         TaskletStep step = stepBuilderFactory.get("item_reader_step_" + String.valueOf(ts))
                 .<String, String>chunk(3) /*chunkSize=20表示读取完20个数据，再进行输出处理，泛型中指定了输入输出的类型*/
                 .faultTolerant() /*容错*/
-                .listener(new DemoChunkListener()) /*chunk级别的监听*/
+                .listener(new ChunkStepListener()) /*chunk级别的监听*/
                 .reader(demoItemRead())
                 .writer(items -> {
                     for (String item : items) {
