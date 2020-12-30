@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 public class SpringContextUtil implements ApplicationContextAware {
 	private static ApplicationContext applicationContext;
 
-	@SuppressWarnings("static-access")
+	@SuppressWarnings(value = "static-access")
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
 		if (this.applicationContext == null) {

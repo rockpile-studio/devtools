@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import studio.rockpile.devtools.protocol.CommonResult;
+import studio.rockpile.devtools.registry.DynamicBeanDemo;
 import studio.rockpile.devtools.util.SpringContextUtil;
 
 import java.text.SimpleDateFormat;
@@ -26,31 +27,9 @@ public class JobLauncherController {
     @Autowired
     private JobLauncher jobLauncher;
     @Autowired
-    private Job launcherDemoJob;
-    @Autowired
-    private JobOperator jobOperator;
+    private DynamicBeanDemo dynamicBeanDemo;
 
     private static final SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
-
-    // http://127.0.0.1:5030/devtools/demo/job/launcher/run?msg=xxx
-    @RequestMapping(value = "/run", method = RequestMethod.GET)
-    public CommonResult<?> run(@RequestParam(value = "msg", required = true) String message) {
-        try {
-            // 把接收到的参数值传递给Job任务
-            // JobParameter : { Object parameter, ParameterType parameterType }
-            JobParameter msgParam = new JobParameter(message);
-            JobParametersBuilder builder = new JobParametersBuilder();
-            builder.addParameter("message", msgParam);
-            JobParameters params = builder.toJobParameters();
-
-            // 启动任务，并把参数传递给任务
-            jobLauncher.run(launcherDemoJob, params);
-        } catch (Exception e) {
-            logger.error("批处理作业执行失败：{}", e);
-            return CommonResult.failed("批处理作业执行失败：" + e.getMessage());
-        }
-        return CommonResult.success("批处理作业执行成功");
-    }
 
     // http://127.0.0.1:5030/devtools/demo/job/launcher/rockpile/run?message=xxx
     @RequestMapping(value = "/rockpile/run", method = RequestMethod.GET)
@@ -58,6 +37,7 @@ public class JobLauncherController {
         try {
             Date launchTime = Calendar.getInstance().getTime();
             JobParametersBuilder builder = new JobParametersBuilder();
+            // JobParameter : { Object parameter, ParameterType parameterType }
             builder.addParameter("#launch_time", new JobParameter(launchTime));
             builder.addParameter("#launch_day", new JobParameter(Long.valueOf(formatter.format(launchTime))));
             builder.addParameter("message", new JobParameter(message));
@@ -69,6 +49,13 @@ public class JobLauncherController {
             logger.error("batch job ({}) processing fail：{}", "rockpileBatchJob", e);
             return CommonResult.failed("job processing fail：" + e.getMessage());
         }
+        return CommonResult.success("job processing success");
+    }
+
+    // http://127.0.0.1:5030/devtools/demo/job/launcher/dynamic/bean/test
+    @RequestMapping(value = "/dynamic/bean/test", method = RequestMethod.GET)
+    public CommonResult<?> testDynamicBean() {
+        dynamicBeanDemo.test();
         return CommonResult.success("job processing success");
     }
 }
