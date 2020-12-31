@@ -1,4 +1,6 @@
 /target/
-/.classpath
 /.gitignore
 /.project
+/devtools.iml
+/.idea
+/log
